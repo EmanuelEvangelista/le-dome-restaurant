@@ -4,15 +4,12 @@
   color: #edefee;
   padding: 2rem 1.5rem;
   display: grid;
-  /* Define el layout del footer: 
-     - 1. Logo (col-span 1, 100px ancho fijo)
-     - 2. Nav (col-span 3, toma el resto del espacio)
-     - 3. Copyright (col-span 4, abarca todo el ancho) */
   grid-template-columns: 100px repeat(3, 1fr); 
   grid-template-areas: 
     "logo nav nav nav"
     "copyright copyright copyright copyright";
   gap: 20px 30px; /* Gap: row-gap column-gap */
+  width: 100%;
   align-items: start; /* Alinea los ítems al inicio de su área */
 }
 

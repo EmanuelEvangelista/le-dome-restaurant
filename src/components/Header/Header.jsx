@@ -1,8 +1,8 @@
 import React from 'react';
-import logo from '../../assets/icon/logo.svg';
+import logo from '../../assets/icon/logo2.png';
 import styles from './Header.module.css';
 
-export const Header = () => (
+const Header = () => (
   <header className={styles.header}>
     <a href="/" className={styles.logo}>
       <img className={styles.logoImage} src={logo} alt="Le Dôme Restaurant Logo" />

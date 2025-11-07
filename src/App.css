@@ -13,19 +13,63 @@
   padding: 1rem;
 }
 
+*{
+  box-sizing: border-box;
+}
+
+h3 {
+  font-size: 18pt;
+  margin: 1rem 0;
+}
+
+h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
 
 .topbar {
   grid-area: topbar;
   display: flex;
+  height: 95px;
   align-items: center;
-  background-color: #f8f9fa;
+  backdrop-filter: blur(10px);
+  background-color:rgba(255, 255, 255, 0.6);
   padding: 1rem;
   gap: 2rem;
   border-bottom: 1px solid #eee;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: column;
+    gap: 1rem;
+    position: absolute;
+  }
+}
 
+/* Estilos globales para botones */
+button {
+  background-color: #f4ce14;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-
-
-
+button:hover {
+  background-color: #e1bd0f;
+}

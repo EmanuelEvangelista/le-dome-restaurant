@@ -10,7 +10,7 @@
 }
 
 .logoImage {
-  height: 50px;
+  height: 100px;
   width: auto;
   transition: transform 0.3s ease;
 }

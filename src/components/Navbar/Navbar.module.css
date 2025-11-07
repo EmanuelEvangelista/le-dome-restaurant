@@ -1,7 +1,7 @@
 .nav {
   flex-grow: 1;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 }
 
@@ -33,14 +33,14 @@
   color: #f4ce14;
 }
 
-/* Estilo para el enlace activo */
-.navList a[class*="active"] {
+/* Estilo para el enlace activo (clase `.active` expuesta desde el módulo) */
+.active {
   color: #f4ce14;
   font-weight: 600;
 }
 
 /* Añadir línea debajo del enlace activo */
-.navList a[class*="active"]::after {
+.active::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -49,4 +49,39 @@
   height: 2px;
   background-color: #f4ce14;
   transition: transform 0.3s ease;
+}
+
+/* Estilos para Pantallas Grandes */
+.hamburgerIcon {
+  display: none; /* Oculta el icono de la hamburguesa por defecto */
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* Estilos para Pantallas Móviles */
+@media (max-width: 768px) {
+  .navList {
+    display: none; /* Oculta los enlaces por defecto en móvil */
+    position: absolute;
+    top: 60px;
+    right: 1rem;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1rem;
+    z-index: 50;
+  }
+
+  .hamburgerIcon {
+    display: block; /* Muestra la hamburguesa en móvil */
+    right: 1rem;
+  }
+
+  .open {
+    display: flex !important; /* Muestra los enlaces cuando el estado `isOpen` es true */
+  }
 }
