@@ -1,117 +1,167 @@
 import React, { useContext } from "react";
 import { RestaurantContext } from "../../RestaurantContext/restaurantContext.jsx";
+import { Button, Container, Form, Row, Col } from "react-bootstrap";
+import { BiFontFamily } from "react-icons/bi";
+import { submitAPI } from "../../utils/api.js";
 
 const BookingForm = () => {
-    // 1. Obtener todos los estados, setters, el dispatcher y availableTimes del Context
-    const { 
-        data, times, guests, occasion, 
-        setData, setTimes, setGuests, setOccasion, 
-        dispatch,
-        availableTimes // 👈 ¡Nuevo: Obtenemos el estado gestionado por el Reducer!
-    } = useContext(RestaurantContext);
+  // 1. Obtener estados, setters, dispatcher y funciones del contexto
+  const {
+    data,
+    times,
+    guests,
+    occasion,
+    setData,
+    setTimes,
+    setGuests,
+    setOccasion,
+    dispatch,
+    availableTimes,
+    handleUpdateTimes,
+  } = useContext(RestaurantContext);
 
-    // 2. Manejador para ACTUALIZAR el estado de los campos al cambiar
-    const handleInputChange = (e, setter) => {
-        const newValue = e.target.value;
-        setter(newValue); // Actualiza el estado local del formulario
+  // 2. Manejador de cambios en los campos
+  const handleInputChange = (e, setter) => {
+    const newValue = e.target.value;
 
-        // 🎯 LÓGICA CLAVE: Si se cambia la fecha, despacha la acción UPDATE_TIMES
-        if (e.target.id === 'res-date') {
-            dispatch({
-                type: 'UPDATE_TIMES',
-                payload: newValue // Enviamos la fecha seleccionada al Reducer
-            });
-            
-            // Opcional: Reiniciar el campo de hora al cambiar la fecha
-            setTimes(""); 
-        }
-    };
+    // 👇 Si se cambia la fecha (usamos name en lugar de id), actualizamos los horarios disponibles desde el contexto
+    if (e.target.name === "res-date") {
+      const selectedDate = newValue;
+      handleUpdateTimes(selectedDate); // 🔹 función del contexto
+      setter(selectedDate); // actualiza la fecha en el estado local
+      setTimes(""); // reinicia la hora seleccionada
+      return; // 👈 salimos aquí
+    }
 
-    // 3. Manejador para el ENVÍO FINAL del formulario (Lógica de Reserva)
-    const handleFormSubmit = (e) => {
-        e.preventDefault(); 
-        
-        // El resto de la lógica de envío permanece igual
-        if (data && times) {
-            dispatch({
-                type: "MARK_TIME_AS_BOOKED",
-                payload: { date: data, time: times },
-            });
-            alert(`¡Reserva confirmada!\nFecha: ${data}, Hora: ${times}, Invitados: ${guests}, Ocasión: ${occasion}`);
-        } else {
-            alert("Por favor, selecciona una fecha y hora para continuar.");
-        }
-    };
+    // para los demás campos (hora, invitados, ocasión)
+    setter(newValue);
+  };
 
-    return (
-        <div>
-            <h2>Reserva tu Mesa</h2>
-            <form onSubmit={handleFormSubmit} style={{ display: "grid", maxWidth: "200px", gap: "20px" }}>
-                
-                {/* Campo Fecha */}
-                <label htmlFor="res-date">Elige la fecha</label>
-                <input 
-                    type="date" 
-                    id="res-date" 
-                    name="res-date"
-                    value={data}
-                    // Aquí despachamos la acción para actualizar horarios
-                    onChange={(e) => handleInputChange(e, setData)} 
-                    required
+  // 3. Manejador para el envío del formulario
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = {
+      date: data,
+      time: times,
+      guests: guests,
+      occasion: occasion,
+};
+
+const isSubmitted = submitAPI(formData);
+
+if (isSubmitted) {
+   alert(
+        `¡Reserva confirmada!\nFecha: ${data}, Hora: ${times}, Invitados: ${guests}, Ocasión: ${occasion}`
+      );
+} else {
+      alert("Lo sentimos, no se pudo realizar la reserva.");
+    }
+  };
+
+  return (
+    <>
+      <Container
+        className="booking-form"
+        style={{
+          padding: "20px",
+          border: "1px solid #ccc",
+          borderRadius: "8px",
+          maxWidth: "800px",
+          margin: "0 auto",
+        }}
+      >
+        <Row className="justify-content-center mt-5">
+          <Col md={6}>
+            <h2 style={{ fontFamily: "Gorditas", fontSize: "2rem" }}>
+              Choose Your Table
+            </h2>
+            <Form
+              onSubmit={handleFormSubmit}
+              style={{ display: "grid", maxWidth: "800px", gap: "20px" }}
+            >
+              {/* Campo Fecha */}
+              <Form.Group className="mb-3" controlId="res-date">
+                <Form.Label>Choose the date</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="res-date"
+                  value={data}
+                  onChange={(e) => handleInputChange(e, setData)}
+                  required
                 />
-                
-                {/* Campo Hora: Ahora se llena dinámicamente con availableTimes */}
-                <label htmlFor="res-time">Elige la hora</label>
-                <select 
-                    id="res-time" 
-                    name="res-time"
-                    value={times}
-                    onChange={(e) => handleInputChange(e, setTimes)}
-                    required
+              </Form.Group>
+
+              {/* Campo Hora */}
+              <Form.Group className="mb-3" controlId="res-time">
+                <Form.Label>Choose the time</Form.Label>
+                <Form.Select
+                  name="res-time"
+                  value={times}
+                  onChange={(e) => handleInputChange(e, setTimes)}
+                  required
                 >
-                    <option value="">Selecciona...</option>
-                    {/* Mapeamos los horarios disponibles del Reducer */}
-                    {availableTimes
-                        // Filtramos para mostrar solo los slots que NO están reservados
-                        .filter(slot => slot.isBooked === false)
-                        .map(slot => (
-                            // Usamos la hora como valor y como texto de la opción
-                            <option key={slot.key} value={slot.time}>
-                                {slot.time}
-                            </option>
-                        ))}
-                </select>
-                
-                {/* Campo Invitados */}
-                <label htmlFor="guests">Número de invitados</label>
-                <input 
-                    type="number" 
-                    placeholder="2" 
-                    min="1" max="6" 
-                    id="guests" 
-                    name="guests"
-                    value={guests}
-                    onChange={(e) => handleInputChange(e, setGuests)}
-                    required
+                  <option value="">Select...</option>
+                  {Array.isArray(availableTimes) && availableTimes.length > 0 ? (
+                    availableTimes.map((slot, idx) => {
+                      // slot can be a string like "17:00" or an object {time, date}
+                      if (slot && typeof slot === 'object') {
+                        const key = slot.date ? `${slot.date}-${slot.time}-${idx}` : `slot-${idx}`;
+                        return (
+                          <option key={key} value={slot.time}>
+                            {slot.time}
+                          </option>
+                        );
+                      }
+                      const key = `slot-${slot}-${idx}`;
+                      return (
+                        <option key={key} value={slot}>
+                          {slot}
+                        </option>
+                      );
+                    })
+                  ) : null}
+                </Form.Select>
+              </Form.Group>
+
+              {/* Campo Invitados */}
+              <Form.Group className="mb-3" controlId="guests">
+                <Form.Label>Number of guests</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="2"
+                  min="1"
+                  max="6"
+                  name="guests"
+                  value={guests}
+                  onChange={(e) => handleInputChange(e, setGuests)}
+                  required
                 />
-                
-                {/* Campo Ocasión */}
-                <label htmlFor="occasion">Ocasión</label>
-                <select 
-                    id="occasion"
-                    name="occasion"
-                    value={occasion}
-                    onChange={(e) => handleInputChange(e, setOccasion)}
+              </Form.Group>
+              {/* Campo Ocasión */}
+              <Form.Group className="mb-3" controlId="occasion">
+                <Form.Label>Occasion</Form.Label>
+                <Form.Select
+                  id="occasion"
+                  name="occasion"
+                  value={occasion}
+                  onChange={(e) => handleInputChange(e, setOccasion)}
                 >
-                    <option value="Birthday">Cumpleaños</option>
-                    <option value="Anniversary">Aniversario</option>
-                </select>
-                
-                <input type="submit" value="Hacer mi Reserva" />
-            </form>
-            <p>Datos en Contexto (debug): Fecha: {data}, Hora: {times}</p>
-        </div>
-    );
+                  <option value="Birthday">Birthday</option>
+                  <option value="Anniversary">Anniversary</option>
+                  <option value="Other">Other</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Button type="submit" variant="primary" className="mt-3 w-100">
+                Make my Reservation
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
 };
 
 export default BookingForm;

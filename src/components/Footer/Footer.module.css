@@ -9,7 +9,8 @@
     "logo nav nav nav"
     "copyright copyright copyright copyright";
   gap: 20px 30px; /* Gap: row-gap column-gap */
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   align-items: start; /* Alinea los ítems al inicio de su área */
 }
 
