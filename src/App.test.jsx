@@ -3,8 +3,9 @@ import "@testing-library/jest-dom";
 import { describe, test, expect } from "vitest";
 import BookingForm from "./components/BookingForm/BookingForm.jsx";
 import { RestaurantProvider } from "./RestaurantContext/restaurantContext.jsx";
-import { fetchAPI } from "./utils/api.js";
+import { timesReducer } from "./RestaurantContext/restaurantContext.jsx";
 import { MemoryRouter } from "react-router-dom";
+import { initializeTimes } from "./RestaurantContext/restaurantContext.jsx";
 
 // Helper para renderizar con Provider
 const renderWithProvider = (ui) => {
@@ -28,8 +29,8 @@ describe("Restaurant App Tests", () => {
   // 📌 TEST 2 — fetchAPI retorna array de horarios
   //
   test("fetchAPI returns array of times in HH:MM format", () => {
-    const testDate = new Date("2025-11-12");
-    const result = fetchAPI(testDate);
+    
+    const result = initializeTimes(new Date());
 
     // Verificar que es un array
     expect(Array.isArray(result)).toBe(true);
@@ -53,13 +54,22 @@ describe("Restaurant App Tests", () => {
   //
   // 📌 TEST 3 — fetchAPI es determinista (mismo resultado para misma fecha)
   //
-  test("fetchAPI returns consistent times for the same date", () => {
-    const testDate = new Date("2025-11-12");
+ describe("timesReducer — UPDATE_TIMES determinism", () => {
+  test("returns identical arrays for the same date", () => {
+    const initialState = []; 
+    const date = "2025-11-12";
 
-    const result1 = fetchAPI(testDate);
-    const result2 = fetchAPI(testDate);
+    const action = { type: "UPDATE_TIMES", payload: date };
 
-    // Para la misma fecha, debe retornar exactamente los mismos horarios
-    expect(result1).toEqual(result2);
+    const state1 = timesReducer(initialState, action);
+    const state2 = timesReducer(initialState, action);
+
+    // Debe ser exactamente el mismo resultado
+    expect(state1).toEqual(state2);
+
+    // Opcional: si esperás strings HH:MM
+    expect(Array.isArray(state1)).toBe(true);
+    state1.forEach((time) => expect(time).toMatch(/^\d{2}:\d{2}$/));
   });
+});
 });
