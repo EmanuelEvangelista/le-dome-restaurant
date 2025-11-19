@@ -1,18 +1,57 @@
+Le Dôme Restaurant Booking App
+📖 Overview
+Le Dôme is a restaurant booking application built with React. It provides users with an elegant interface to explore the restaurant’s specials, testimonials, and background information, while also allowing them to make and confirm reservations.
 
-# React + Vite
+The project uses React Context to manage global state, including booking data, available times, and restaurant information. Booking data is persisted in localStorage so users don’t lose their reservation details when refreshing the page.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Features
+Restaurant Introduction: Displays the restaurant’s name, location, description, and hero image.
 
-Currently, two official plugins are available:
+Special Meals Section: Showcases featured dishes with images, descriptions, and prices.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Testimonials: Highlights customer feedback with profile images.
 
-## React Compiler
+About Section: Provides background information about the restaurant and chefs.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Booking Form: Users can select date, time, number of guests, and occasion.
 
-## Expanding the ESLint configuration
+Booking Confirmation Page: Displays confirmed reservation details.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
->>>>>>> 67c448b (First commit)
+Persistent Data: Reservation details are saved in localStorage.
+
+Dynamic Times: Available booking times are managed via a reducer and fetched from an API utility.
+
+🛠️ Tech Stack
+React (functional components, hooks, context API)
+
+React Bootstrap (layout and styling)
+
+JavaScript (ES6+)
+
+LocalStorage (data persistence)
+
+📂 Project Structure
+Código
+src/
+│── assets/img/             # Images (restaurant, chefs, profiles, food)
+│── components/             # Reusable components (BookingForm, etc.)
+│── RestaurantContext/      # Context provider and state management
+│── utils/api.js            # API utility for fetching available times
+│── pages/                  # Page components (BookingPage, ConfirmedBookingPage)
+│── App.js                  # Main app entry point
+⚙️ Context API
+The RestaurantContext provides:
+
+specials: Array of special meals.
+
+testimonialsList: Array of customer testimonials.
+
+intro: Restaurant introduction data.
+
+about: Restaurant background info.
+
+bookingData: Reservation details (date, time, guests, occasion).
+
+availableTimes: Managed via reducer and API.
+
+Utility functions: setBookingData, handleUpdateTimes, etc.
