@@ -1,20 +1,17 @@
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 import { RestaurantContext } from "../../RestaurantContext/restaurantContext.jsx";
 import { Button, Container, Form, Row, Col } from "react-bootstrap";
-import { BiFontFamily } from "react-icons/bi";
 import TimeOption from "./TimeOption.jsx";
-import ConfirmedBooking from "./ConfirmedBooking.jsx";
 import { submitAPI } from "../../utils/api.js";
 import { useNavigate } from "react-router-dom";
 
 const BookingForm = () => {
-  // 1. Obtener estados, setters, dispatcher y funciones del contexto
+  
   const {
     data,
     times,
     guests,
     occasion,
-    isSubmitted,
     setData,
     setTimes,
     setGuests,
@@ -24,7 +21,7 @@ const BookingForm = () => {
     setIsSubmitted
   } = useContext(RestaurantContext);
 
-  const [validated, setValidated] = React.useState(false);
+  const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
 
   // 2. Manejador de cambios en los campos
@@ -93,8 +90,8 @@ const BookingForm = () => {
         }}
       >
         <Row className="justify-content-center mt-5">
-          <Col md={6}>
-            <h2 style={{ fontFamily: "Gorditas", fontSize: "2rem" }}>
+          <Col md={8}>
+            <h2 style={{ fontFamily: "Roboto Condensed, sans-serif", fontSize: "2rem" }}>
               Choose Your Table
             </h2>
             <Form

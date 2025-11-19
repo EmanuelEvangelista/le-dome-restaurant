@@ -1,14 +1,17 @@
-import React, { useReducer, useState, useEffect } from "react";
-import restaurantImage from "../assets/img/restaurant.jpg";
+import { useReducer, useState, useEffect, createContext } from "react";
+import restaurantImage from "../assets/img/restaurantOutside.png";
 import chefImage from "../assets/img/restaurant-chef B.jpg";
+import chefImage2 from "../assets/img/chef2.jpg";
+import profileW1 from "../assets/img/perfil1.png";
+import profileW2 from "../assets/img/perfil3w.png";
+import profileM1 from "../assets/img/perfil2M.png";
+import profileM2 from "../assets/img/perfil4M.png";
 import greek from "../assets/img/greek-salad.jpg";
 import lemon from "../assets/img/lemon-dessert.jpg";
 import restaurantFood from "../assets/img/restauranfood.jpg";
 import { fetchAPI } from "../utils/api.js";
 
-// --- Contexto principal ---
-const RestaurantContext = React.createContext();
-
+const RestaurantContext = createContext();
 // --- Datos estáticos ---
 const specialsMeals = [
   { title: "Greek Salad", key: 1, description: "The famous greek salad...", price: "$12.99", image: greek },
@@ -17,10 +20,10 @@ const specialsMeals = [
 ];
 
 const testimonials = [
-  { name: "Emma L.", key: 1, feedback: "An unforgettable dining...", image: restaurantFood },
-  { name: "James K.", key: 2, feedback: "The best French cuisine...", image: restaurantImage },
-  { name: "Linda M.", key: 3, feedback: "A hidden gem!...", image: restaurantImage },
-  { name: "Michael S.", key: 4, feedback: "From start to finish...", image: restaurantImage },
+  { name: "Emma L.", key: 1, feedback: "An unforgettable dining...", image: profileW1 },
+  { name: "James K.", key: 2, feedback: "The best French cuisine...", image: profileM1 },
+  { name: "Linda M.", key: 3, feedback: "A hidden gem!...", image: profileW2 },
+  { name: "Michael S.", key: 4, feedback: "From start to finish...", image: profileM2 },
 ];
 
 const introduction = {
@@ -35,7 +38,7 @@ const aboutInfo = {
   name: "Le Dôme",
   location: "San Francisco",
   description: "At Le Dôme, we are proud to be the ambassador of authentic French cuisine in the Bay. Our mission is simple: to transport our guests to the finest bistros in France, offering dishes prepared with precision, passion, and respect for time-honored culinary techniques. From the first amuse-bouche to the last petit four, every ingredient is selected for its superior quality, and every presentation is a work of art. We are the meeting point where the timeless elegance of French gastronomy meets impeccable service, creating not just a dinner, but a memorable cultural experience.",
-  image1: restaurantImage,
+  image1: chefImage2,
   image2: chefImage,
 };
 

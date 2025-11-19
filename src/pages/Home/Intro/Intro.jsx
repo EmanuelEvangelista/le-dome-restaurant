@@ -1,14 +1,14 @@
-import React from 'react';
+import { useContext } from 'react';
 import { RestaurantContext } from '../../../RestaurantContext/restaurantContext';
 import styles from './Intro.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const Intro = () => {
-    const { intro } = React.useContext(RestaurantContext);
+    const { intro } = useContext(RestaurantContext);
     const navigate = useNavigate();
 
     const handleClick = () => {
-    navigate("/reservation"); // cambia "/reservations" por la ruta deseada
+    navigate("/reservation");
     };
 
     return (
