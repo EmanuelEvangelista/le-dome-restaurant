@@ -1,0 +1,14 @@
+.ModalStyle {
+    display: flex; 
+    justify-content: center; /* Centrando horizontalmente */ 
+    align-items: center;
+    position: fixed; /* Fija el formulario en la pantalla */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centra el formulario */
+    background-color: rgba(72, 60, 136, 0.9); /* Fondo negro con 70% de transparencia */
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 9999;
+}

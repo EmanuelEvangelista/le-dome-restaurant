@@ -65,6 +65,19 @@ function RestaurantProvider({ children }) {
   const [testimonialsList, setTestimonialsList] = useState(testimonials);
   const [intro, setIntro] = useState(introduction);
   const [about, setAbout] = useState(aboutInfo);
+  const [team, setTeam] = useState([]);
+
+  const storedCart = JSON.parse(localStorage.getItem("cartData")) || [];
+  const [order, setOrder] = useState([]);
+  const [cart , setCart] = useState(storedCart);
+  const [orderCount, setOrderCount] = useState(cart.length);
+  
+  const [data, setData] = useState("");
+  const [times, setTimes] = useState("");
+  const [guests, setGuests] = useState(2);
+  const [occasion, setOccasion] = useState("Birthday");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [openModal, setOpenModal] = useState(false);  
 
   const storedBooking = JSON.parse(localStorage.getItem("bookingData"));
 
@@ -88,15 +101,70 @@ function RestaurantProvider({ children }) {
     initializeTimes
   );
 
-  const [data, setData] = useState("");
-  const [times, setTimes] = useState("");
-  const [guests, setGuests] = useState(2);
-  const [occasion, setOccasion] = useState("Birthday");
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  useEffect(() => {
+    async function getTeam() {
+      try {
+        const response = await fetch ("https://randomuser.me/api/?results=8");
+        const data = await response.json();
+        setTeam(data.results);
+      } catch (error) {
+        console.error("Error fetching team data:", error);
+      }
+    }
+    getTeam();
+  } , []);
+
+ useEffect(() => {
+    async function getMenu() {
+      try {
+        const res = await fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood");
+        const data = await res.json();
+
+        const mealsWithPrice = data.meals.slice(0, 12).map(meal => ({
+          ...meal,
+          price: (Math.random() * 20 + 5).toFixed(2) // precio entre 5 y 25 USD
+        }));
+
+        setOrder(mealsWithPrice);
+        console.log("Menu fetched:", mealsWithPrice);
+      } catch (error) {
+        console.error("Error fetching menu:", error);
+      }
+    }
+    getMenu();
+  }, []);
 
   const handleUpdateTimes = (selectedDate) => {
     dispatch({ type: "UPDATE_TIMES", payload: selectedDate });
   };
+
+    // 👉 Lógica del carrito
+  const addToCart = (meal) => {
+    setCart((prevCart) => {
+      const exists = prevCart.find(item => item.idMeal === meal.idMeal);
+      if (exists) {
+        return prevCart.map(item =>
+          item.idMeal === meal.idMeal ? { ...item, qty: item.qty + 1 } : item
+        );
+      }
+      return [...prevCart, { ...meal, qty: 1 }];
+    });
+    setOpenModal(true);
+    setOrderCount(cart.length + 1);
+  };
+
+  const removeFromCart = (idMeal) => {
+    setCart(prevCart => prevCart.filter(item => item.idMeal !== idMeal));
+    setOrderCount(cart.length - 1);
+  };
+
+  const getTotal = () => {
+    return cart.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
+  };
+
+    useEffect(() => {
+    localStorage.setItem("cartData", JSON.stringify(cart));
+  }, [cart]);
 
   return (
     <RestaurantContext.Provider
@@ -112,6 +180,14 @@ function RestaurantProvider({ children }) {
         guests,
         occasion,
         isSubmitted,
+        team,
+        order,
+        cart,
+        openModal,
+        orderCount,
+        addToCart,
+        removeFromCart,
+        getTotal,
         setIsSubmitted,
         dispatch,
         setBookingData,
@@ -124,6 +200,7 @@ function RestaurantProvider({ children }) {
         setGuests,
         setOccasion,
         handleUpdateTimes,
+        setOpenModal
       }}
     >
       {children}

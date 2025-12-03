@@ -1,10 +1,9 @@
-import React from "react";
-import BookingForm from "../../components/BookingForm/BookingForm.jsx";
+import { useContext } from "react";
 import { RestaurantContext } from "../../RestaurantContext/restaurantContext";
 import { Container, Row, Col, Card } from "react-bootstrap";
 
 const ConfirmedBookingPage = () => {
-  const { bookingData } = React.useContext(RestaurantContext);
+  const { bookingData } = useContext(RestaurantContext);
 
   if (!bookingData || !bookingData.date) {
     return (
