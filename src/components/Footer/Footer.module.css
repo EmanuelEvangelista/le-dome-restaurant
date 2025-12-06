@@ -27,10 +27,6 @@
   gap: 30px;
 }
 
-/* ================================================= */
-/* 2. Estilos de Alineación Vertical (FLEXBOX)       */
-/* ================================================= */
-
 /* Aplica Flexbox al contenedor de cada columna (div hijo) */
 .columContainer {
   display: flex; /* Habilita Flexbox */

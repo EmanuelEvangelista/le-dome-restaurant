@@ -20,10 +20,10 @@ const specialsMeals = [
 ];
 
 const testimonials = [
-  { name: "Emma L.", key: 1, feedback: "An unforgettable dining...", image: profileW1 },
-  { name: "James K.", key: 2, feedback: "The best French cuisine...", image: profileM1 },
-  { name: "Linda M.", key: 3, feedback: "A hidden gem!...", image: profileW2 },
-  { name: "Michael S.", key: 4, feedback: "From start to finish...", image: profileM2 },
+  { name: "Emma L.", key: 1, feedback: "An unforgettable dining...", image: profileW1, rating:"4" },
+  { name: "James K.", key: 2, feedback: "The best French cuisine...", image: profileM1, rating:"5" },
+  { name: "Linda M.", key: 3, feedback: "A hidden gem!...", image: profileW2, rating:"4" },
+  { name: "Michael S.", key: 4, feedback: "From start to finish...", image: profileM2, rating:"5" },
 ];
 
 const introduction = {
@@ -66,6 +66,12 @@ function RestaurantProvider({ children }) {
   const [intro, setIntro] = useState(introduction);
   const [about, setAbout] = useState(aboutInfo);
   const [team, setTeam] = useState([]);
+
+  const [menus, setMenus] = useState({
+    entradas: [],
+    principales: [],
+    postres: []
+  });
 
   const storedCart = JSON.parse(localStorage.getItem("cartData")) || [];
   const [order, setOrder] = useState([]);
@@ -114,8 +120,42 @@ function RestaurantProvider({ children }) {
     getTeam();
   } , []);
 
+
+  useEffect(() => {
+  const fetchDetails = async (id) => {
+    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+    const data = await res.json();
+    return data.meals[0];
+  };
+
+  const getMenus = async () => {
+    try {
+      const [starterRes, beefRes, dessertRes] = await Promise.all([
+        fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Starter"),
+        fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef"),
+        fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Dessert"),
+      ]);
+
+      const starter = (await starterRes.json()).meals.slice(0, 5);
+      const beef = (await beefRes.json()).meals.slice(0, 6);
+      const dessert = (await dessertRes.json()).meals.slice(0, 4);
+
+      // Obtener detalles completos
+      const entradas = await Promise.all(starter.map(m => fetchDetails(m.idMeal)));
+      const principales = await Promise.all(beef.map(m => fetchDetails(m.idMeal)));
+      const postres = await Promise.all(dessert.map(m => fetchDetails(m.idMeal)));
+
+      setMenus({ entradas, principales, postres });
+    } catch (error) {
+      console.error("Error fetching menus:", error);
+    }
+  };
+
+  getMenus();
+}, []);
+
  useEffect(() => {
-    async function getMenu() {
+    async function getOrder() {
       try {
         const res = await fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood");
         const data = await res.json();
@@ -131,7 +171,7 @@ function RestaurantProvider({ children }) {
         console.error("Error fetching menu:", error);
       }
     }
-    getMenu();
+    getOrder();
   }, []);
 
   const handleUpdateTimes = (selectedDate) => {
@@ -185,6 +225,7 @@ function RestaurantProvider({ children }) {
         cart,
         openModal,
         orderCount,
+        menus,
         addToCart,
         removeFromCart,
         getTotal,

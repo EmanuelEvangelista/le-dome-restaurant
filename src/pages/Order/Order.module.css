@@ -1,0 +1,20 @@
+.btnCustom {
+  background-color: #f4ce14 !important;
+  border-color: #f4ce14 !important;
+  color: #000 !important;
+  justify-content: end;
+}
+.btnCustom:hover {
+  background-color: #d4b010 !important; /* tono más oscuro al pasar el mouse */
+  border-color: #d4b010 !important;
+}
+
+.title {
+  font-size: 2rem;
+  font-family: "Gorditas", sans-serif;
+}
+
+.text {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 1rem;
+}

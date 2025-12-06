@@ -1,5 +1,5 @@
 import './App.css'
-import React from 'react'
+import "bootstrap-icons/font/bootstrap-icons.css";
 import AppRoutes from './routes/AppRoutes.jsx'
 import { RestaurantProvider } from './RestaurantContext/restaurantContext.jsx';
 

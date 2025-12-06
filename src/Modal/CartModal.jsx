@@ -1,66 +1,63 @@
 import { useContext } from "react";
 import { RestaurantContext } from "../RestaurantContext/restaurantContext.jsx";
 import { useNavigate } from "react-router-dom";
-
+import { ListGroup, Button, Modal } from "react-bootstrap";
 
 const CartModal = () => {
   const { cart, removeFromCart, getTotal, openModal, setOpenModal } = useContext(RestaurantContext);
   const navigate = useNavigate();
 
-  if (!openModal) return null; // 👉 si está en false, no se muestra nada
-
   return (
-    <div style={overlayStyle}>
-      <div style={modalStyle}>
-        <h2>🛒 Carrito</h2>
+    <Modal show={openModal} onHide={() => setOpenModal(false)} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>🛒 Carrito</Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body>
         {cart.length === 0 ? (
           <p>Tu carrito está vacío</p>
         ) : (
-          <ul>
+          <ListGroup variant="flush">
             {cart.map(item => (
-              <li key={item.idMeal}>
-                {item.strMeal} (x{item.qty}) - ${item.price * item.qty}
-                <button onClick={() => removeFromCart(item.idMeal)}>❌</button>
-              </li>
+              <ListGroup.Item key={item.idMeal} className="d-flex justify-content-between align-items-center">
+                <div>
+                  {item.strMeal} (x{item.qty})
+                </div>
+                <div>
+                  ${item.price * item.qty}
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    className="ms-2"
+                    onClick={() => removeFromCart(item.idMeal)}
+                  >
+                    ❌
+                  </Button>
+                </div>
+              </ListGroup.Item>
             ))}
-          </ul>
+          </ListGroup>
         )}
-        <h3>Total: ${getTotal()}</h3>
-        <div>
-        <button onClick={() => setOpenModal(false)}>Continue shopping</button>
-        <button
+        <h5 className="mt-3">Total: ${getTotal()}</h5>
+      </Modal.Body>
+
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setOpenModal(false)}>
+          🛍️ Seguir comprando
+        </Button>
+        <Button
+          style={{ backgroundColor: "#f4ce14", borderColor: "#f4ce14", color: "#000" }}
           onClick={() => {
             setOpenModal(false);
             navigate("/checkout");
           }}
+          disabled={cart==0}
         >
-          Finalize order
-        </button>
-        </div>
-        </div>
-    </div>
+          ✅ Finalizar pedido
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
-};
-
-// 👉 estilos básicos inline
-const overlayStyle = {
-  position: "fixed",
-  top: 0, left: 0,
-  width: "100%", height: "100%",
-  backgroundColor: "rgba(0,0,0,0.5)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 1000
-};
-
-const modalStyle = {
-  backgroundColor: "#fff",
-  padding: "20px",
-  borderRadius: "8px",
-  width: "400px",
-  maxHeight: "80vh",
-  overflowY: "auto"
 };
 
 export default CartModal;

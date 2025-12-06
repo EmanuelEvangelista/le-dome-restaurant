@@ -6,10 +6,8 @@ import ConfirmedBookingPage from "../pages/Booking/ConfirmedBookingPage";
 import About from "../pages/About/About";
 import Order from "../pages/Order/Order";
 import Checkout from "../pages/Checkout/Checkout";
-
-// Componentes temporales para las rutas que faltan
-const Menu = () => <h1>Menu Page</h1>;
-const Login = () => <h1>Login Page</h1>;
+import Login from "../pages/Login/Login";
+import Menu from "../pages/Menus/Menus";
 
 export default function AppRoutes() {
   return (

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import { GiHamburgerMenu } from "react-icons/gi";
+import ThemeToggleButton from '../ThemeToggleButton/ThemeToggleButton.jsx';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); // Estado para el menú
@@ -30,6 +31,7 @@ const Navbar = () => {
       <li><NavLink to="/order-online" onClick={toggleMenu} className={({isActive}) => isActive ? styles.active : ''}>ORDER ONLINE</NavLink></li>
       <li><NavLink to="/login" onClick={toggleMenu} className={({isActive}) => isActive ? styles.active : ''}>LOGIN</NavLink></li>
       </ul>
+       <ThemeToggleButton />
     </nav>
   );
 };

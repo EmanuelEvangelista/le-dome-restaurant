@@ -1,27 +1,63 @@
-import React from 'react';
+import { useContext } from 'react';
 import { RestaurantContext } from '../../../RestaurantContext/restaurantContext';
-import styles from './Specials.module.css';
 import { NavLink } from 'react-router-dom';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import styles from "./Specials.module.css"
 
 const Specials = () => {
-    const { specials } = React.useContext(RestaurantContext);
+  const { specials } = useContext(RestaurantContext);
 
-    return (
-        <section className={styles.specials}>
-        <h2 aria-label="Specials menus">Specials</h2>
+  return (
+    <Container className={`${styles.specials} mt-4`}>
+      <h2 className="text-center mb-4">✨ Specials</h2>
+      <Row className="g-4 justify-content-evenly">
         {specials.map((meal) => (
-          <article key={meal.key} className={styles.specialItem}>
-            <img src={meal.image} alt={meal.title} />
-            <div className={styles.titlePrice}>
-                <h3>{meal.title}</h3>
-                <span>{meal.price}</span>
-            </div>
-            <p>{meal.description}</p>
-            <NavLink to="/order-online" className={({isActive}) => `${styles.links} ${isActive ? styles.active : ''}`}>Order a delivery 🔗</NavLink>
-          </article>
+          <Col key={meal.key} xs={12} sm={6} md={4} lg={3}>
+            <Card
+              className="h-100 shadow-sm"
+              style={{
+                backgroundColor: "#f8f9fa",
+                borderRadius: "12px",
+                transition: "transform 0.3s ease"
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-5px)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+            >
+              <Card.Img
+                variant="top"
+                src={meal.image}
+                alt={meal.title}
+                style={{
+                  height: "200px",
+                  objectFit: "cover",
+                  borderRadius: "8px 8px 0 0"
+                }}
+              />
+              <Card.Body className="d-flex flex-column">
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                  <Card.Title>{meal.title}</Card.Title>
+                  <span className="fw-bold">${meal.price}</span>
+                </div>
+                <Card.Text className="text-muted">{meal.description}</Card.Text>
+                <NavLink to="/order-online" className="mt-auto">
+                  <Button
+                    variant="link"
+                    style={{
+                      color: "#f4ce14",
+                      fontWeight: "500",
+                      textDecoration: "none"
+                    }}
+                  >
+                    🚚 Order a delivery
+                  </Button>
+                </NavLink>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-            </section>
-    );
-}
+      </Row>
+    </Container>
+  );
+};
 
 export default Specials;
