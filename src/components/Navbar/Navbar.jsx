@@ -31,7 +31,9 @@ const Navbar = () => {
       <li><NavLink to="/order-online" onClick={toggleMenu} className={({isActive}) => isActive ? styles.active : ''}>ORDER ONLINE</NavLink></li>
       <li><NavLink to="/login" onClick={toggleMenu} className={({isActive}) => isActive ? styles.active : ''}>LOGIN</NavLink></li>
       </ul>
+      <div className={styles.themeBtn}>
        <ThemeToggleButton />
+      </div>
     </nav>
   );
 };

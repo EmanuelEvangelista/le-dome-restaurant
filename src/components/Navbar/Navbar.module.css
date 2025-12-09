@@ -1,7 +1,7 @@
 .nav {
   flex-grow: 1;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -31,6 +31,10 @@
 
 .navList a:hover {
   color: #f4ce14;
+}
+
+.themeBtn {
+  margin-left: auto; /* empuja el botón hacia la derecha */
 }
 
 /* Estilo para el enlace activo (clase `.active` expuesta desde el módulo) */
