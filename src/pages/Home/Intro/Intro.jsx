@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { RestaurantContext } from '../../../RestaurantContext/restaurantContext';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import styles from './Intro.module.css';
 
 const Intro = () => {
   const { intro } = useContext(RestaurantContext);
@@ -31,7 +32,7 @@ const Intro = () => {
                 fontWeight: "bold",
                 color: "#000"
               }}
-              className="mt-2"
+              className={`mt-2 ${styles.btn}`}
             >
               {intro.buttonText}
             </Button>

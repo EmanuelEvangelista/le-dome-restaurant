@@ -14,9 +14,9 @@ import { fetchAPI } from "../utils/api.js";
 const RestaurantContext = createContext();
 // --- Datos estáticos ---
 const specialsMeals = [
-  { title: "Greek Salad", key: 1, description: "The famous greek salad...", price: "$12.99", image: greek },
-  { title: "Bruschetta", key: 2, description: "Our Bruschetta is made...", price: "$5.99", image: restaurantFood },
-  { title: "Lemon Dessert", key: 3, description: "This comes straight...", price: "$5.00", image: lemon },
+  { strMeal: "Greek Salad", idMeal: 1, description: "Fresh tomatoes, cucumbers, red onion, Kalamata olives, and feta, dressed with olive oil and oregano, a crisp Mediterranean classic..", price: "12.99", strMealThumb: greek },
+  { strMeal: "Bruschetta", idMeal: 2, description: "Toasted artisan bread rubbed with garlic, topped with ripe tomatoes, basil, and olive oil. A timeless Italian bite celebrating simplicity.", price: "5.99", strMealThumb: restaurantFood },
+  { strMeal: "Lemon Dessert", idMeal: 3, description: "Light lemon cream with airy sponge, balancing sweet and tart flavors. A refreshing, elegant finish that cleanses the palate.", price: "5.00", strMealThumb: lemon },
 ];
 
 const testimonials = [
@@ -77,29 +77,30 @@ function RestaurantProvider({ children }) {
   const [order, setOrder] = useState([]);
   const [cart , setCart] = useState(storedCart);
   const [orderCount, setOrderCount] = useState(cart.length);
+  const [currentForm, setCurrentForm] = useState(null);
   
   const [data, setData] = useState("");
   const [times, setTimes] = useState("");
   const [guests, setGuests] = useState(2);
   const [occasion, setOccasion] = useState("Birthday");
+  
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [openModal, setOpenModal] = useState(false);  
+  const [openModal, setOpenModal] = useState(false);
 
-  const storedBooking = JSON.parse(localStorage.getItem("bookingData"));
+  const [user, setUser] = useState(() => {
+  const storedUser = localStorage.getItem("userData");
+  return storedUser ? JSON.parse(storedUser) : null;
+});
+  
+  
+  const storedAuth = JSON.parse(localStorage.getItem("isAuthenticated")) || false;
+  const [isAuthenticated, setIsAuthenticated] = useState(storedAuth);
 
-  const [bookingData, setBookingData] = useState(
-    storedBooking || {
-      date: "",
-      time: "",
-      guests: "",
-      occasion: ""
-    }
-  );
-
-  // Guardar en localStorage cuando bookingData cambia
-  useEffect(() => {
-    localStorage.setItem("bookingData", JSON.stringify(bookingData));
-  }, [bookingData]);
+const [bookingData, setBookingData] = useState(() => {
+  const saved = localStorage.getItem("bookingData");
+  // si existe en localStorage, parsealo; si no, usar objeto con defaults
+  return saved ? JSON.parse(saved) : { date: "", time: "", guests: 2, occasion: "Birthday" };
+});
 
   const [availableTimes, dispatch] = useReducer(
     timesReducer,
@@ -155,24 +156,34 @@ function RestaurantProvider({ children }) {
 }, []);
 
  useEffect(() => {
-    async function getOrder() {
-      try {
-        const res = await fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood");
-        const data = await res.json();
+  async function getOrder() {
+    try {
+      const res = await fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood");
+      const data = await res.json();
 
-        const mealsWithPrice = data.meals.slice(0, 12).map(meal => ({
-          ...meal,
-          price: (Math.random() * 20 + 5).toFixed(2) // precio entre 5 y 25 USD
-        }));
+      const mealsWithPrice = data.meals.slice(0, 12).map(meal => ({
+        ...meal,
+        price: (Math.random() * 20 + 5).toFixed(2) // precio entre 5 y 25 USD
+      }));
 
-        setOrder(mealsWithPrice);
-        console.log("Menu fetched:", mealsWithPrice);
-      } catch (error) {
-        console.error("Error fetching menu:", error);
-      }
+      // 👉 Combinar los especiales con los pedidos
+      const combinedOrders = [
+        ...specialsMeals,   // tus platos especiales estáticos
+        ...mealsWithPrice   // los platos de mariscos con precio aleatorio
+      ];
+
+      setOrder(combinedOrders);
+      console.log("Orders fetched:", combinedOrders);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
     }
-    getOrder();
-  }, []);
+  }
+  getOrder();
+}, []);
+
+  useEffect(() => {
+    localStorage.setItem("isAuthenticated", JSON.stringify(isAuthenticated));
+  }, [isAuthenticated]);
 
   const handleUpdateTimes = (selectedDate) => {
     dispatch({ type: "UPDATE_TIMES", payload: selectedDate });
@@ -206,6 +217,14 @@ function RestaurantProvider({ children }) {
     localStorage.setItem("cartData", JSON.stringify(cart));
   }, [cart]);
 
+      useEffect(() => {
+    localStorage.setItem("userData", JSON.stringify(user));
+  }, [user]);
+
+  useEffect(() => {
+  localStorage.setItem("bookingData", JSON.stringify(bookingData));
+}, [bookingData]);
+
   return (
     <RestaurantContext.Provider
       value={{
@@ -226,6 +245,12 @@ function RestaurantProvider({ children }) {
         openModal,
         orderCount,
         menus,
+        isAuthenticated,
+        user,
+        currentForm,
+        setCurrentForm,
+        setUser,
+        setIsAuthenticated,
         addToCart,
         removeFromCart,
         getTotal,

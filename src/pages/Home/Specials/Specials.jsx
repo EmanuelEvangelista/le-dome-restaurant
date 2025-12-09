@@ -12,7 +12,7 @@ const Specials = () => {
       <h2 className="text-center mb-4">✨ Specials</h2>
       <Row className="g-4 justify-content-evenly">
         {specials.map((meal) => (
-          <Col key={meal.key} xs={12} sm={6} md={4} lg={3}>
+          <Col key={meal.idMeal} xs={12} sm={6} md={4} lg={3}>
             <Card
               className="h-100 shadow-sm"
               style={{
@@ -25,8 +25,8 @@ const Specials = () => {
             >
               <Card.Img
                 variant="top"
-                src={meal.image}
-                alt={meal.title}
+                src={meal.strMealThumb}
+                alt={meal.strMeal}
                 style={{
                   height: "200px",
                   objectFit: "cover",
@@ -35,10 +35,10 @@ const Specials = () => {
               />
               <Card.Body className="d-flex flex-column">
                 <div className="d-flex justify-content-between align-items-center mb-2">
-                  <Card.Title>{meal.title}</Card.Title>
+                  <Card.Title>{meal.strMeal}</Card.Title>
                   <span className="fw-bold">${meal.price}</span>
                 </div>
-                <Card.Text className="text-muted">{meal.description}</Card.Text>
+                <Card.Text className="text-muted" style={{ fontSize: "1rem" }}>{meal.description}</Card.Text>
                 <NavLink to="/order-online" className="mt-auto">
                   <Button
                     variant="link"

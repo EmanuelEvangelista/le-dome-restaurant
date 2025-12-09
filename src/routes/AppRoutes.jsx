@@ -8,6 +8,7 @@ import Order from "../pages/Order/Order";
 import Checkout from "../pages/Checkout/Checkout";
 import Login from "../pages/Login/Login";
 import Menu from "../pages/Menus/Menus";
+import UserInfo from "../pages/Login/UserInfo";
 
 export default function AppRoutes() {
   return (
@@ -23,6 +24,7 @@ export default function AppRoutes() {
           <Route path="/order-online" element={<Order />} />
            <Route path="/checkout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/user-info" element={<UserInfo />} />
         </Routes>
       </MainLayout>
     </BrowserRouter>

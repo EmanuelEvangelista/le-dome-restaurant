@@ -1,74 +1,9 @@
-.introduction{
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: #495e57;
-  padding: 20px;
-  color: #edefee;
-  border-radius: 12px;
-  margin-top: 2rem;
-}
-
-.textColumn {
-  display: flex;
-  flex-direction: column; 
-  gap: 10px;
-  max-width: 30%;
-}
-
-.introduction button {
-  max-width: 200px;
-}
-
-.introduction img {
-  width: 50%;
-  height: auto;
-  border-radius: 8px;
-}
 
 /* ===== RESPONSIVO ===== */
 @media (max-width: 768px) {
-  .introduction {
-    flex-direction: column;
+.btn {
+  margin-bottom: 1rem;
 }
 }
 
-main h1 {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
-}
 
-main h2 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Remove gap between h1 and h4 specifically in the .introduction text column */
-.introduction .textColumn h1 {
-  margin: 0;
-  line-height: 1.0;
-}
-
-.introduction .textColumn h4 {
-  margin: 0;
-  font-weight: 500;
-  margin-top: 0; /* ensure no gap under h1 */
-  line-height: 1.1;
-}
-
-button {
-  background-color: #f4ce14;
-  border: none;
-  border-radius: 16px;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #e0c511;
-}

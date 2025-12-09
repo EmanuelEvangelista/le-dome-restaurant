@@ -2,6 +2,9 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import useSubmit from "../../components/hooks/useSubmit";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { RestaurantContext } from "../../RestaurantContext/restaurantContext";
 import {
   Alert,
   AlertIcon,
@@ -25,6 +28,9 @@ import {
 import FullScreenSection from "../../components/FullScreenSection/FullScreenSection";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { setIsAuthenticated, isAuthenticated, isSubmitted, setUser } = useContext(RestaurantContext);
+
   const { isLoading, response, submit } = useSubmit();
   const [currentForm, setCurrentForm] = useState(null);
 
@@ -72,10 +78,23 @@ const Login = () => {
   useEffect(() => {
     if (!response || !currentForm) return;
     if (response.type === "success") {
-      if (currentForm === "login") formikLogin.resetForm();
-      if (currentForm === "register") formikRegister.resetForm();
+      if (currentForm === "login") {
+        setUser(formikLogin.values);
+        formikLogin.resetForm();
+      }
+      if (currentForm === "register") {
+        setUser(formikRegister.values);
+        formikRegister.resetForm();
+      }
+      setIsAuthenticated(true);
     }
-  }, [response]);
+  }, [response, currentForm]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/user-info");
+    }
+  }, [isAuthenticated]);
 
   return (
     <FullScreenSection
@@ -94,7 +113,7 @@ const Login = () => {
         mx="auto"
         color="white"
       >
-        <Heading as="h1" size="lg" textAlign="center" mb={6} color="#e0ba10">
+        <Heading as="h1" size="lg" textAlign="center" mb={6} color="teal.300">
           Welcome
         </Heading>
         <Tabs isFitted variant="soft-rounded">
@@ -111,8 +130,8 @@ const Login = () => {
                     <FormLabel>Email</FormLabel>
                     <Input
                       variant="filled"
-                      bg="white"
-                      color="white"
+                      bg="#white"
+                      color="#e0ba10"
                       {...formikLogin.getFieldProps("email")}
                     />
                     <FormErrorMessage>{formikLogin.errors.email}</FormErrorMessage>
@@ -122,21 +141,21 @@ const Login = () => {
                     <Input
                       type="password"
                       variant="filled"
-                      bg="white"
-                      color="white"
+                      bg="#white"
+                      color="#e0ba10"
                       {...formikLogin.getFieldProps("password")}
                     />
                     <FormErrorMessage>{formikLogin.errors.password}</FormErrorMessage>
                   </FormControl>
                   <Button 
-                  type="submit" 
-                  width="full" 
-                  isLoading={isLoading} 
-                  mt="2em"
-                   bg="#f4ce14"
-                  color="black"
-                  _hover={{ bg: "#e0ba10" }}
-                  _selected={{ bg: "#e0ba10", color: "black" }}
+                    type="submit" 
+                    width="full" 
+                    isLoading={isLoading} 
+                    mt="2em"
+                    bg="#f4ce14"
+                    color="black"
+                    _hover={{ bg: "#e0ba10" }}
+                    _selected={{ bg: "#e0ba10", color: "black" }}
                   >
                     Sign In
                   </Button>
@@ -159,8 +178,8 @@ const Login = () => {
                     <FormLabel>First Name</FormLabel>
                     <Input
                       variant="filled"
-                      bg="white"
-                      color="white"
+                      bg="#white"
+                      color="#e0ba10"
                       {...formikRegister.getFieldProps("firstName")}
                     />
                     <FormErrorMessage>{formikRegister.errors.firstName}</FormErrorMessage>
@@ -169,8 +188,8 @@ const Login = () => {
                     <FormLabel>Last Name</FormLabel>
                     <Input
                       variant="filled"
-                      bg="white"
-                      color="white"
+                      bg="#white"
+                      color="#e0ba10"
                       {...formikRegister.getFieldProps("lastName")}
                     />
                     <FormErrorMessage>{formikRegister.errors.lastName}</FormErrorMessage>
@@ -179,8 +198,8 @@ const Login = () => {
                     <FormLabel>Email</FormLabel>
                     <Input
                       variant="filled"
-                      bg="white"
-                      color="white"
+                      bg="#white"
+                      color="#e0ba10"
                       {...formikRegister.getFieldProps("email")}
                     />
                     <FormErrorMessage>{formikRegister.errors.email}</FormErrorMessage>
@@ -190,8 +209,8 @@ const Login = () => {
                     <Input
                       type="password"
                       variant="filled"
-                      bg="white"
-                      color="white"
+                      bg="#white"
+                      color="#e0ba10"
                       {...formikRegister.getFieldProps("password")}
                     />
                     <FormErrorMessage>{formikRegister.errors.password}</FormErrorMessage>
@@ -201,21 +220,21 @@ const Login = () => {
                     <Input
                       type="password"
                       variant="filled"
-                      bg="white"
-                      color="white"
+                      bg="#white"
+                      color="#e0ba10"
                       {...formikRegister.getFieldProps("passwordConfirm")}
                     />
                     <FormErrorMessage>{formikRegister.errors.passwordConfirm}</FormErrorMessage>
                   </FormControl>
                   <Button 
-                  type="submit" 
-                  width="full" 
-                  isLoading={isLoading} 
-                  mt="2em"
-                   bg="#f4ce14"
-                  color="black"
-  _               hover={{ bg: "#e0ba10" }}
-                  _selected={{ bg: "#e0ba10", color: "black" }}
+                    type="submit" 
+                    width="full" 
+                    isLoading={isLoading} 
+                    mt="2em"
+                    bg="#f4ce14"
+                    color="black"
+                    _hover={{ bg: "#e0ba10" }}
+                    _selected={{ bg: "#e0ba10", color: "black" }}
                   >
                     Sign Up
                   </Button>

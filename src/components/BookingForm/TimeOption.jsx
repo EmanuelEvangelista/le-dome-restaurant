@@ -1,8 +1,8 @@
-import React from "react";
+import { useContext} from "react";
 import { RestaurantContext } from "../../RestaurantContext/restaurantContext"
 
 const TimeOption = () => {
-  const { availableTimes } = React.useContext(RestaurantContext);
+  const { availableTimes } = useContext(RestaurantContext);
 
   if (!Array.isArray(availableTimes)) return null;
 
