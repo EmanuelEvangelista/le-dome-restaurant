@@ -235,10 +235,10 @@ if (currentForm === "register") {
                     />
                     <FormErrorMessage>{formikRegister.errors.passwordConfirm}</FormErrorMessage>
                   </FormControl>
-                  <Button 
-                    type="submit" 
-                    width="full" 
-                    isLoading={isLoading} 
+                  <Button
+                    type="submit"
+                    width="full"
+                    isLoading={isLoading}
                     mt="2em"
                     bg="#f4ce14"
                     color="black"
