@@ -76,26 +76,35 @@ const Login = () => {
   });
 
   useEffect(() => {
-    if (!response || !currentForm) return;
-    if (response.type === "success") {
-      if (currentForm === "login") {
-        setUser(formikLogin.values);
-        formikLogin.resetForm();
-      }
-      if (currentForm === "register") {
-        setUser(formikRegister.values);
-        formikRegister.resetForm();
-      }
-      setIsAuthenticated(true);
-    }
-  }, [response, currentForm]);
+  if (!response || !currentForm) return;
+
+  if (response.type === "success") {
+    if (currentForm === "login") {
+  const loginData = { email: formikLogin.values.email };
+  setUser(loginData);
+  formikLogin.resetForm();
+}
+
+if (currentForm === "register") {
+  const registerData = {
+    firstName: formikRegister.values.firstName,
+    lastName: formikRegister.values.lastName,
+    email: formikRegister.values.email,
+  };
+  setUser(registerData);
+  formikRegister.resetForm();
+}
+
+    setIsAuthenticated(true);
+  }
+}, [response, currentForm]);
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/user-info");
     }
   }, [isAuthenticated]);
-
+  
   return (
     <FullScreenSection
       isDarkBackground

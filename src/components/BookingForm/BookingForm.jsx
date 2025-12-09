@@ -36,20 +36,6 @@ const BookingForm = () => {
     bookingData.guests &&
     bookingData.occasion;
 
-  // 👉 Si ya hay una reserva → mostrar mensaje de confirmación
-  const navigateConfirmed = () => {
-    useEffect(() => {
-      navigate("/confirmed-booking");
-    }, []);
-    return null;
-  };
-
-  if (hasBooking) {
-    return (
-      navigateConfirmed()
-    );
-  }
-
   // 👉 Manejador de cambios en los campos
   const handleInputChange = (e, setter) => {
     const newValue = e.target.value;
@@ -87,7 +73,7 @@ const BookingForm = () => {
       } else if (!isAuthenticated) {
         setIsSubmitted(true);
         setShowAlert(true);
-        setTimeout(() => navigate("/login"), 3000);
+        setTimeout(() => navigate("/login"), 1000);
       }
     }
   };
@@ -99,10 +85,10 @@ const BookingForm = () => {
   );
 
   useEffect(() => {
-    if (isSubmitted && isAuthenticated) {
+    if (hasBooking && isAuthenticated) {
       navigate("/confirmed-booking");
     }
-  }, [isSubmitted, isAuthenticated]);
+  }, [hasBooking, isAuthenticated]);
 
   return (
     <Container

@@ -75,32 +75,36 @@ function RestaurantProvider({ children }) {
 
   const storedCart = JSON.parse(localStorage.getItem("cartData")) || [];
   const [order, setOrder] = useState([]);
-  const [cart , setCart] = useState(storedCart);
+  const [cart, setCart] = useState(storedCart);
   const [orderCount, setOrderCount] = useState(cart.length);
   const [currentForm, setCurrentForm] = useState(null);
-  
+
   const [data, setData] = useState("");
   const [times, setTimes] = useState("");
   const [guests, setGuests] = useState(2);
   const [occasion, setOccasion] = useState("Birthday");
-  
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   const [user, setUser] = useState(() => {
-  const storedUser = localStorage.getItem("userData");
-  return storedUser ? JSON.parse(storedUser) : null;
-});
-  
-  
-  const storedAuth = JSON.parse(localStorage.getItem("isAuthenticated")) || false;
+    const storedUser = localStorage.getItem("userData");
+    return storedUser
+      ? JSON.parse(storedUser)
+      : { firstName: "", lastName: "", email: "" };
+  });
+
+  const storedAuth =
+    JSON.parse(localStorage.getItem("isAuthenticated")) || false;
   const [isAuthenticated, setIsAuthenticated] = useState(storedAuth);
 
-const [bookingData, setBookingData] = useState(() => {
-  const saved = localStorage.getItem("bookingData");
-  // si existe en localStorage, parsealo; si no, usar objeto con defaults
-  return saved ? JSON.parse(saved) : { date: "", time: "", guests: 2, occasion: "Birthday" };
-});
+  const [bookingData, setBookingData] = useState(() => {
+    const saved = localStorage.getItem("bookingData");
+    // si existe en localStorage, parsealo; si no, usar objeto con defaults
+    return saved
+      ? JSON.parse(saved)
+      : { date: "", time: "", guests: 2, occasion: "Birthday" };
+  });
 
   const [availableTimes, dispatch] = useReducer(
     timesReducer,
@@ -213,13 +217,11 @@ const [bookingData, setBookingData] = useState(() => {
     return cart.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
   };
 
-    useEffect(() => {
-    localStorage.setItem("cartData", JSON.stringify(cart));
-  }, [cart]);
-
-      useEffect(() => {
-    localStorage.setItem("userData", JSON.stringify(user));
-  }, [user]);
+  useEffect(() => {
+  if (user) {
+  localStorage.setItem("userData", JSON.stringify(user));
+}
+}, [user]);
 
   useEffect(() => {
   localStorage.setItem("bookingData", JSON.stringify(bookingData));
