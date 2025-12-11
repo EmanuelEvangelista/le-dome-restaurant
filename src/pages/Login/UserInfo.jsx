@@ -5,13 +5,9 @@ import Logout from "../../components/Logout/Logout";
 import { useNavigate } from "react-router-dom";
 
 const UserInfoShow = () => {
-  const { user, bookingData } = useContext(RestaurantContext);
+  const { user, bookingData, setIsAuthenticated } = useContext(RestaurantContext);
   const navigate = useNavigate();
 
-  if (!user || !user.email) {
-    console.log("No user data available");
-    return null;
-  }
 
   return (
     <Container

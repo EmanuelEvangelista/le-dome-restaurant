@@ -32,13 +32,9 @@ const Testimonials = () => {
                 <Card.Text style={{ fontStyle: "italic", color: "#666" }}>
                   {testimonial.feedback}
                 </Card.Text>
-                <Card.Text>
-                  {
-                  <RatingStars
-                  rating={testimonial.rating}
-                  />
-                  }
-                </Card.Text>
+                <div className="d-flex justify-content-center mt-2">
+                  <RatingStars rating={testimonial.rating} />
+                </div>
               </Card.Body>
             </Card>
           </Col>

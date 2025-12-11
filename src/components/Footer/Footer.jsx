@@ -7,7 +7,7 @@ const Footer = () => (
     <img className={styles.logo} src={logo} alt="Le Dôme Restaurant Logo" />
     <nav className={styles.nav}>
       <div className={styles.columContainer}>
-        <h3 aria-label='Dorman Navigation'>Dormant Navigation</h3>
+        <h3 aria-label='Dorman Navigation'>WeatherWise Navigation</h3>
         <ul>
           <li><NavLink to="/" end className={({isActive}) => isActive ? styles.active : ''}>Home</NavLink></li>
           <li><NavLink to="/about" className={({isActive}) => isActive ? styles.active : ''}>About</NavLink></li>

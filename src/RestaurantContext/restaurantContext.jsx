@@ -218,9 +218,7 @@ function RestaurantProvider({ children }) {
   };
 
   useEffect(() => {
-  if (user) {
   localStorage.setItem("userData", JSON.stringify(user));
-}
 }, [user]);
 
   useEffect(() => {

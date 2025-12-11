@@ -29,7 +29,7 @@ import FullScreenSection from "../../components/FullScreenSection/FullScreenSect
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated, isAuthenticated, isSubmitted, setUser } = useContext(RestaurantContext);
+  const { setIsAuthenticated, isAuthenticated, user, setUser } = useContext(RestaurantContext);
 
   const { isLoading, response, submit } = useSubmit();
   const [currentForm, setCurrentForm] = useState(null);
@@ -104,7 +104,13 @@ if (currentForm === "register") {
       navigate("/user-info");
     }
   }, [isAuthenticated]);
-  
+
+  useEffect(() => {
+    if (!user || !user.email) {
+    setIsAuthenticated(false);
+    }
+  }, []);
+
   return (
     <FullScreenSection
       isDarkBackground
