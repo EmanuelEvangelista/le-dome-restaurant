@@ -61,7 +61,6 @@ const BookingForm = () => {
     } else {
       const formData = { date: data, time: times, guests, occasion };
       setBookingData(formData);
-      localStorage.setItem("bookingData", JSON.stringify(formData));
 
       const result = submitAPI(formData);
       setIsSubmitted(!!result);

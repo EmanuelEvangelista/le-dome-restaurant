@@ -221,8 +221,12 @@ function RestaurantProvider({ children }) {
   localStorage.setItem("userData", JSON.stringify(user));
 }, [user]);
 
-  useEffect(() => {
-  localStorage.setItem("bookingData", JSON.stringify(bookingData));
+useEffect(() => {
+  if (bookingData && bookingData.date) {
+    localStorage.setItem("bookingData", JSON.stringify(bookingData));
+  } else {
+    localStorage.removeItem("bookingData");
+  }
 }, [bookingData]);
 
   return (
