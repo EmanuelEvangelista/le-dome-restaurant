@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { RestaurantContext } from "../RestaurantContext/restaurantContext.jsx";
+import { RestaurantContext } from "../contexts/restaurantContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { ListGroup, Button, Modal } from "react-bootstrap";
 

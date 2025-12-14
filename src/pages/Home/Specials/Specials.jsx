@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { RestaurantContext } from '../../../RestaurantContext/restaurantContext';
+import { RestaurantContext } from '../../../contexts/restaurantContext';
 import { NavLink } from 'react-router-dom';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import styles from "./Specials.module.css"

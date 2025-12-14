@@ -1,6 +1,6 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { useContext } from "react";
-import { RestaurantContext } from "../../RestaurantContext/restaurantContext.jsx";
+import { RestaurantContext } from "../../contexts/restaurantContext.jsx";
 import CartModal from "../../Modal/CartModal.jsx";
 import { Button, Badge } from "react-bootstrap";
 

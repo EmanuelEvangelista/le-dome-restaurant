@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import useSubmit from "../../components/hooks/useSubmit";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { RestaurantContext } from "../../RestaurantContext/restaurantContext";
+import { RestaurantContext } from "../../contexts/restaurantContext.jsx";
+import { useAlertContext } from '../../contexts/alertContext.jsx';
 import {
   Alert,
   AlertIcon,
@@ -30,6 +31,7 @@ import FullScreenSection from "../../components/FullScreenSection/FullScreenSect
 const Login = () => {
   const navigate = useNavigate();
   const { setIsAuthenticated, isAuthenticated, user, setUser } = useContext(RestaurantContext);
+  const { onOpen } = useAlertContext();
 
   const { isLoading, response, submit } = useSubmit();
   const [currentForm, setCurrentForm] = useState(null);
@@ -83,6 +85,7 @@ const Login = () => {
   const loginData = { email: formikLogin.values.email };
   setUser(loginData);
   formikLogin.resetForm();
+   onOpen("success", "Login successful");
 }
 
 if (currentForm === "register") {
@@ -93,9 +96,12 @@ if (currentForm === "register") {
   };
   setUser(registerData);
   formikRegister.resetForm();
+  onOpen("success", "Registration successful");
 }
 
     setIsAuthenticated(true);
+  } else {
+    onOpen("error", response.message || "Something went wrong");
   }
 }, [response, currentForm]);
 
@@ -174,13 +180,6 @@ if (currentForm === "register") {
                   >
                     Sign In
                   </Button>
-                  {response && currentForm === "login" && (
-                    <Alert status={response.type === "success" ? "success" : "error"} variant="subtle" mt={4} rounded="md">
-                      <AlertIcon />
-                      <AlertTitle>{response.type === "success" ? "Login Successful" : "Login Failed"}</AlertTitle>
-                      <AlertDescription>{response.message}</AlertDescription>
-                    </Alert>
-                  )}
                 </VStack>
               </form>
             </TabPanel>

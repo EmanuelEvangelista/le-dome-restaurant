@@ -1,11 +1,13 @@
 import { useContext } from "react";
-import { RestaurantContext } from "../../RestaurantContext/restaurantContext";
+import { RestaurantContext } from "../../contexts/restaurantContext";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useAlertContext} from '../../contexts/alertContext.jsx';
 
 const Logout = () => {
   const navigate = useNavigate();
   const { setUser, setIsAuthenticated, setIsSubmitted, setBookingData } = useContext(RestaurantContext);
+  const { onOpen } = useAlertContext();
 
   const handleLogout = () => {
     // 👉 limpiar estados del contexto
@@ -13,6 +15,7 @@ const Logout = () => {
     setIsAuthenticated(false);
     setIsSubmitted(false);
     setBookingData({ date: "", time: "", guests: 2, occasion: "Birthday" });
+    onOpen('success', 'Your seccion has been closed');
 
     // 👉 limpiar localStorage
     localStorage.removeItem("userData");

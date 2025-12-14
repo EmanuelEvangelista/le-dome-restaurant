@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { RestaurantContext } from "../../RestaurantContext/restaurantContext.jsx";
+import { RestaurantContext } from "../../contexts/restaurantContext.jsx";
 import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import TimeOption from "./TimeOption.jsx";
 import { submitAPI } from "../../utils/api.js";
@@ -12,7 +12,6 @@ const BookingForm = () => {
     times,
     guests,
     occasion,
-    isSubmitted,
     setData,
     setTimes,
     setGuests,

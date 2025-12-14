@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { RestaurantContext } from '../../../RestaurantContext/restaurantContext';
+import { RestaurantContext } from '../../../contexts/restaurantContext';
 import { Container, Row, Col } from 'react-bootstrap';
 import styles from './About.module.css';
 

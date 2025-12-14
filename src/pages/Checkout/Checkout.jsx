@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { RestaurantContext } from "../../RestaurantContext/restaurantContext.jsx";
+import { RestaurantContext } from "../../contexts/restaurantContext.jsx";
 import { Container, Card, ListGroup, Button } from "react-bootstrap";
 
 const Checkout = () => {

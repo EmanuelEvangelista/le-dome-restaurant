@@ -1,4 +1,4 @@
-import { RestaurantContext } from '../../RestaurantContext/restaurantContext.jsx';
+import { RestaurantContext } from '../../contexts/restaurantContext.jsx';
 import { useContext } from "react";
 import { Container, Row, Col, Card, Image } from "react-bootstrap";
 

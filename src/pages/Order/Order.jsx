@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { RestaurantContext } from "../../RestaurantContext/restaurantContext.jsx";
+import { RestaurantContext } from "../../contexts/restaurantContext.jsx";
 import CartModal from "../../Modal/CartModal.jsx";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import styles from "./Order.module.css";

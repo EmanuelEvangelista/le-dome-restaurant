@@ -1,7 +1,7 @@
 import BookingForm from "../../components/BookingForm/BookingForm.jsx";
 import imagenRestaurant from "../../assets/img/restaurantOutside.png";
 import imagenRestaurant2 from "../../assets/img/restaurantInside2.png";
-import { RestaurantContext } from '../../RestaurantContext/restaurantContext.jsx';
+import { RestaurantContext } from '../../contexts/restaurantContext.jsx';
 import { useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 

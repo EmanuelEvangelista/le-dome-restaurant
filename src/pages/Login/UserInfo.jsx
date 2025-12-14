@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { RestaurantContext } from "../../RestaurantContext/restaurantContext";
+import { RestaurantContext } from "../../contexts/restaurantContext";
 import { Button, Card, Container } from "react-bootstrap";
 import Logout from "../../components/Logout/Logout";
 import { useNavigate } from "react-router-dom";
