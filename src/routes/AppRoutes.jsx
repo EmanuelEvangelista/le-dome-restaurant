@@ -1,4 +1,4 @@
-import { HashRouter } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import MainLayout from "../layouts/MainLayouts";
 import BookingPage from "../pages/Booking/BookingPage";
@@ -22,7 +22,7 @@ export default function AppRoutes() {
           <Route path="/reservation" element={<BookingPage />} />
           <Route path="/confirmed-booking" element={<ConfirmedBookingPage />} />
           <Route path="/order-online" element={<Order />} />
-           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user-info" element={<UserInfo />} />
         </Routes>
