@@ -1,7 +1,7 @@
 # Le Dôme — Restaurant Booking App
 
 ## Description
-Le Dôme is a restaurant booking application built with React and Vite. It allows users to browse specials, read testimonials, view the menu, add items to a cart, and create/confirm reservations. Reservation data, user info, and cart data are persisted in localStorage.
+Le Dôme is a restaurant booking application built with React and Vite. It allows users to browse specials, read testimonials, view the menu, add items to a cart, and create/confirm reservations. Reservation data, user info, and cart data are persisted in `localStorage`.
 
 ## Features
 - Home page with introduction, featured specials, and testimonials.
@@ -41,5 +41,35 @@ Le Dôme is a restaurant booking application built with React and Vite. It allow
 ## Installation & Usage
 1. Clone repo and enter folder:
 ```bash
-git clone <repo-url>
+git clone https://github.com/EmanuelEvangelista/repo-restaurant-app
 cd restaurant-app
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+3. Run dev server:
+```bash
+npm run dev
+# open http://localhost:5173
+```
+4. Build and preview:
+```bash
+npm run build
+npm run preview
+```
+5. Run tests and lint:
+```bash
+npm test
+npm run lint
+```
+
+## Notes & Recommendations
+- `express` and `mercadopago` are listed in `package.json` but there is no backend or payment integration included here — add and configure a separate server if you plan to use them.
+- `src/utils/api.js` generates example availability; replace with a real availability API for production.
+- Consider cleaning unused/duplicate dev deps (e.g., `jest` vs `vitest`) if not needed.
+- Deploy the `dist/` folder to Netlify, Vercel, or any static host.
+
+## License
+Please see the included `LICENSE` file.
