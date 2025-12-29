@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import MainLayout from "../layouts/MainLayouts";
 import BookingPage from "../pages/Booking/BookingPage";
@@ -12,7 +12,7 @@ import UserInfo from "../pages/Login/UserInfo";
 
 export default function AppRoutes() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <MainLayout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,11 +22,11 @@ export default function AppRoutes() {
           <Route path="/reservation" element={<BookingPage />} />
           <Route path="/confirmed-booking" element={<ConfirmedBookingPage />} />
           <Route path="/order-online" element={<Order />} />
-           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user-info" element={<UserInfo />} />
         </Routes>
       </MainLayout>
-    </BrowserRouter>
+    </HashRouter>
   );
 }

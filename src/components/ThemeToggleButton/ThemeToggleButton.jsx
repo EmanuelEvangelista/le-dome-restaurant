@@ -1,11 +1,8 @@
 import { IconButton, useColorMode } from "@chakra-ui/react";
-import "bootstrap-icons/font/bootstrap-icons.css"; // Importa los íconos
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 const ThemeToggleButton = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-
-  // Define los colores según el tema
-  const iconColor = colorMode === "light" ? "black" : "orange";
 
   return (
     <IconButton
@@ -15,13 +12,7 @@ const ThemeToggleButton = () => {
       size="md"
       variant="ghost"
       fontSize="1.5rem"
-      icon={
-        <i
-          className={colorMode === "light" ? "bi bi-moon-fill" : "bi bi-sun-fill"}
-          style={{ color: iconColor }}
-        />
-      }
-      _hover={{ color: iconColor }}
+      icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
     />
   );
 };
