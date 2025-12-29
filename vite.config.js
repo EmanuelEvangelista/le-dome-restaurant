@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-export default defineConfig({
-  base: "/le-dome-restaurant/",
+export default defineConfig(({ mode }) => ({
+  base: mode === "production" ? "/le-dome-restaurant/" : "/",
   plugins: [react()],
   test: {
     environment: "jsdom",
@@ -15,4 +15,4 @@ export default defineConfig({
   build: {
     sourcemap: false,
   },
-});
+}));
