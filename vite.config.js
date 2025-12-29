@@ -1,19 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// https://vite.dev/config/
 export default defineConfig({
+  base: "/le-dome-restaurant/",
   plugins: [react()],
   test: {
-    environment: 'jsdom',
+    environment: "jsdom",
     globals: true,
-    setupFiles: './src/setupTests.js',
+    setupFiles: "./src/setupTests.js",
   },
-    esbuild: {
+  esbuild: {
     legalComments: "none",
   },
   build: {
-    sourcemap: false, // 👈 evita que React use eval()
-  }
-})
-
+    sourcemap: false,
+  },
+});
